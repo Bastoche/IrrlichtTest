@@ -85,11 +85,38 @@ int main()
     diffuseLight->getLightData().SpecularColor = SColorf(0.6, 0.0, 0.0, 1);
 
 
+    // PARTICLES
+    IParticleSystemSceneNode* particleSystem = sceneManager->addParticleSystemSceneNode(false);
+
+    IParticleEmitter* emitter = particleSystem->createBoxEmitter(
+        aabbox3d<irr::f32>(-3,0,-3,3,1,3),
+        vector3df(0.0f,0.06f,0.0f),
+        80,100,
+        SColor(0,0,0,0),
+        SColor(0,255,255,255),
+        600, 1000,
+        0,
+        dimension2df(6.0f,6.0f),
+        dimension2df(8.0f,8.0f)
+    );
+
+    particleSystem->setEmitter(emitter);
+    emitter->drop();
+    particleSystem->setMaterialFlag(EMF_LIGHTING, false);
+    particleSystem->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
+    particleSystem->setMaterialTexture(0, driver->getTexture("fire.bmp"));
+    particleSystem->setMaterialType(EMT_TRANSPARENT_VERTEX_ALPHA);
+
+    wchar_t title[100];
+
     // render loop
-    while(device->run()) {
-    driver->beginScene (true, true, video::SColor(255,255,255,255));
-    sceneManager->drawAll();
-    driver->endScene();
+    while(device->run())
+    {
+        swprintf(title, 100, L"FPS : %d", driver->getFPS());
+        device->setWindowCaption(title);
+        driver->beginScene (true, true, video::SColor(255,255,255,255));
+        sceneManager->drawAll();
+        driver->endScene();
     }
 
     device->drop();
