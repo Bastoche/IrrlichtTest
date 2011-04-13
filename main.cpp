@@ -87,6 +87,7 @@ int main()
 
     // PARTICLES
     IParticleSystemSceneNode* particleSystem = sceneManager->addParticleSystemSceneNode(false);
+    particleSystem->setPosition(vector3df(0, 100, -20));
 
     IParticleEmitter* emitter = particleSystem->createBoxEmitter(
         aabbox3d<irr::f32>(-3,0,-3,3,1,3),
@@ -102,10 +103,16 @@ int main()
 
     particleSystem->setEmitter(emitter);
     emitter->drop();
-    particleSystem->setMaterialFlag(EMF_LIGHTING, false);
+
+    particleSystem->setMaterialFlag(EMF_LIGHTING, true);
     particleSystem->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
     particleSystem->setMaterialTexture(0, driver->getTexture("fire.bmp"));
     particleSystem->setMaterialType(EMT_TRANSPARENT_VERTEX_ALPHA);
+
+    IParticleAffector* affector = particleSystem->createFadeOutParticleAffector(SColor(0,0,0,0), 1200);
+    particleSystem->addAffector(affector);
+    affector->drop();
+
 
     wchar_t title[100];
 
