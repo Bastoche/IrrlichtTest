@@ -74,17 +74,15 @@ int main()
     sceneManager->getMeshManipulator()-> makePlanarTextureMapping(room->getMesh(0), 0.004f);
     roomNode->setMaterialTexture(0, driver->getTexture("rockwall.jpg") );
     roomNode->getMaterial(0).Shininess = 20;
+    roomNode->getMaterial(0).EmissiveColor = SColor(255,0,255,255);
 
     // AMBIENT LIGHT
     sceneManager->setAmbientLight(SColorf(0.2, 0.2, 0.2, 0.0));
 
-    // DIFFUSE LIGHT
+    // POINT LIGHT
     ILightSceneNode* diffuseLight = sceneManager->addLightSceneNode (0, vector3df(100,100,200), SColorf(0.4f,0.4f,0.6f,0.0f), 100.0f);
     diffuseLight->getLightData().DiffuseColor = SColorf(0.6, 1.0, 1.0, 1);
     diffuseLight->getLightData().SpecularColor = SColorf(0.6, 0.0, 0.0, 1);
-
-
-
 
 
     // render loop
